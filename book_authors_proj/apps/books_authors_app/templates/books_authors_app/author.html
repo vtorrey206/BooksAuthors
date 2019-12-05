@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="{%static 'books_authors_app/css/style.css'%}">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <h1>Add an Author</h1>
+            <form class="main" action="/process_author" method="POST">
+                {%csrf_token%}
+                First Name: <input type="text" name="first">
+                <br>
+                Last Name: <input type="text" name="last">
+                <br>
+                Notes: <textarea rows="4" cols="50" name="notes"></textarea>
+                <br>
+                <input type="hidden" name="notes" value="add">
+                <input class="button" type="submit" value="ADD">
+            </form>
+        </div>
+        <!-- start of the table -->
+        <table style="border: 1px solid grey;">
+            <tr>
+                <th style="width:150px;height:15px;text-align:center;">ID</th>
+                <th style="width:150px;height:15px;text-align:center;">Name</th>
+                <th style="width:150px;height:15px;text-align:center;">Action</th>
+            </tr>
+            {%for a in author%}
+            <tr>
+                <td style="width:150px;height:15px;text-align:center;">{{a.id}}</td>
+                <td style="width:150px;height:15px;text-align:center;">{{a.first_name}}{{a.last_name}}</td>
+                <td style="width:150px;height:15px;text-align:center;"><a href="/notes/{{a.id}}">View</a></td>
+            </tr>
+            {% endfor %}
+    </div>
+</body>
+
+</html>

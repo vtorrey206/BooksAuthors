@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    {% load static %}
+    <link rel="stylesheet" href="{%static 'books_authors_app/css/style.css'%}">
+</head>
+<body>
+        <h1>{{author.first_name}}{{author.last_name}}</h1>
+        <p>ID:{{author.id}}</p>
+        <p>Notes:{{author.notes}}</p>
+        <table>
+            <tr>
+                <th>Books</th>
+            </tr>
+                {%for b in author.books.all%}
+            <tr>
+                <td>{{b.title}}</td>
+            </tr>
+                {% endfor %}
+            </table> 
+            <form method="POST" action="/push_book/{{author.id}}"> 
+                {%csrf_token%}   
+            <select name="push_book">
+                    {%for b in books%}
+                <option value="{{b.id}}">{{b.title}}</option>
+                    {% endfor %}
+            </select>
+            <input type="hidden" name="description" value="add">
+            <input class="button" type="submit" value="ADD">
+            </form> 
+
+
+</body>
+</html>
